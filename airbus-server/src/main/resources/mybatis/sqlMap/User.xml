@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ttm.basic.dal.mapper.UserMapper">
+    <resultMap id="userMap" type="User">
+        <id column="pkId" property="pkId"/>
+        <result column="user_id" property="userId"/>
+        <result column="user_pwd" property="userPwd"/>
+        <result column="slat" property="salt"/>
+
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="is_delete" property="isDelete"/>
+    </resultMap>
+
+    <select id="base_column">
+        pkId,user_id,user_pwd,salt,createTime,updateTime,is_delete
+    </select>
+
+    <sql id="pageQuery">
+        <where>
+            1=1
+            <if test="isDelete!=null">
+                AND is_delete=#{isDelete}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="User" keyProperty="pkId" useGeneratedKeys="true">
+        INSERT INTO t_user(user_id,user_pwd,slat,is_delete,createTime,updateTime)
+        VALUES(#{userId},#{userPwd},#{slat},#{isDelete},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="User">
+        UPDATE t_user
+        <set>
+            <if test="isDelete!=null and isDelete!=''">is_delete=#{isDelete},</if>
+            updateTime=#{updateTime}
+        </set>
+        <where>
+            pkId=#{pkId}
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        UPDATE t_user SET  is_delete=1 WHERE pkId=#{pkId}
+    </delete>
+
+    <select id="select" parameterType="Map" resultMap="userMap">
+        SELECT
+        <include refid="base_column"/>
+        <include refid="pageQuery"/>
+        FROM t_user limit #{offset},#{pageSize}
+    </select>
+
+    <select id="count" parameterType="Map" resultType="java.lang.Long">
+        SELECT count(pkId) FROM t_user
+        <include refid="pageQuery"/>
+    </select>
+
+    <select id="login" parameterType="User" resultType="User">
+        SELECT
+        <include refid="base_column"/>
+        FROM t_user WHERE user_id=#{userId} AND user_pwd=#{userPwd}
+    </select>
+
+    <select id="findByUserId" parameterType="User" resultType="User">
+        SELECT
+        <include refid="base_column"/>
+        FROM t_user WHERE user_id=#{userId}
+    </select>
+
+
+
+</mapper>

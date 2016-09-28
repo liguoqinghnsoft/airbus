@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ttm.airbus.dal.mapper.PermissionMapper">
+    <resultMap id="permissionMap" type="Permission">
+        <id column="pkId" property="pkId"/>
+        <result column="code" property="code"/>
+        <result column="description" property="description"/>
+
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="is_delete" property="isDelete"/>
+    </resultMap>
+
+    <select id="base_column">
+        pkId,code,description,createTime,updateTime,is_delete
+    </select>
+
+    <sql id="pageQuery">
+        <where>
+            1=1
+            <if test="isDelete!=null">
+                AND is_delete=#{isDelete}
+            </if>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="Permission" keyProperty="pkId" useGeneratedKeys="true">
+        INSERT INTO t_permission(code,description,is_delete,createTime,updateTime)
+        VALUES(#{code},#{description},#{isDelete},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="Permission">
+        UPDATE t_permission
+        <set>
+            <if test="isDelete!=null and isDelete!=''">is_delete=#{isDelete},</if>
+            updateTime=#{updateTime}
+        </set>
+        <where>
+            pkId=#{pkId}
+        </where>
+    </update>
+
+    <delete id="delete" parameterType="Long">
+        UPDATE t_permission SET  is_delete=1 WHERE pkId=#{pkId}
+    </delete>
+
+    <select id="select" parameterType="Map" resultMap="permissionMap">
+        SELECT
+        <include refid="base_column"/>
+        <include refid="pageQuery"/>
+        FROM t_permission limit #{offset},#{pageSize}
+    </select>
+
+    <select id="count" parameterType="Map" resultType="java.lang.Long">
+        SELECT count(pkId) FROM t_permission
+        <include refid="pageQuery"/>
+    </select>
+
+    <select id="findByRoleId" parameterType="String" resultMap="permissionMap">
+        SELECT a.pkId,a.code,a.description,a.createTime,a.updateTime,a.is_delete FROM
+        t_permission a INNER JOIN t_role_permission b on a.pkId=b.permissionId
+        WHERE b.role_id=#{roleId}
+    </select>
+
+
+
+</mapper>

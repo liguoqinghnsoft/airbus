@@ -1,19 +1,21 @@
 package com.ttm.airbus.controller;
 
+import com.ttm.airbus.dal.model.User;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by liguoqing on 2016/8/30.
+ * Created by liguoqing on 2016/9/19.
  */
-@RestController
+@Controller
 @Configuration
-public class HomeController {
+public class LoginController {
 
-    @RequestMapping("/user/home")
-    public String home(){
-        return "It works!";
+    @RequestMapping("/login")
+    public String login(){
+        return "index";
     }
 
 }
