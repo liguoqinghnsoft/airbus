@@ -5,24 +5,24 @@ package com.ttm.airbus.dal.model;
  */
 public class UserRole extends BaseModel{
 
-    public long getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public long getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(long roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
-    private long userId; //用户标识
-    private long roleId; //角色标识
+    private Long userId; //用户标识
+    private Long roleId; //角色标识
 
     @Override
     public String toString() {

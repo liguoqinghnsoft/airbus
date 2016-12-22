@@ -15,6 +15,8 @@ public interface BaseMapper<T> {
 
     public void delete(Serializable pkId);
 
+    public T selectById(Serializable pkId);
+
     public List<T> select(Map<String, Object> params);
 
     public long count(Map<String, Object> params);

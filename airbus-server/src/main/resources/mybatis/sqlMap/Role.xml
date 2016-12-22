@@ -10,9 +10,9 @@
         <result column="is_delete" property="isDelete"/>
     </resultMap>
 
-    <select id="base_column">
+    <sql id="base_column">
         pkId,name,createTime,updateTime,is_delete
-    </select>
+    </sql>
 
     <sql id="pageQuery">
         <where>
@@ -55,12 +55,21 @@
         <include refid="pageQuery"/>
     </select>
 
-    <select id="findByUserId" parameterType="String" resultMap="roleMap">
+    <select id="findByUserId" parameterType="java.lang.Long" resultMap="roleMap">
         SELECT a.pkId,a.name,a.createTime,a.updateTime,a.is_delete FROM
-        t_role a INNER JOIN t_user_role b on a.pkId=b.roleId
+        t_role a INNER JOIN t_user_role b on a.pkId=b.role_id
         WHERE b.user_id=#{userId}
     </select>
 
+    <select id="findAll" resultMap="roleMap">
+        SELECT a.pkId,a.name,a.createTime,a.updateTime,a.is_delete FROM
+        t_role a INNER JOIN t_user_role b on a.pkId=b.roleId
+    </select>
 
+    <select id="selectById"  parameterType="java.lang.Long" resultMap="roleMap">
+        SELECT
+        <include refid="base_column"/>
+        FROM t_role WHERE pkId=#{pkId}
+    </select>
 
 </mapper>

@@ -3,7 +3,7 @@ package com.ttm.airbus.dal.model;
 /**
  * Created by liguoqing on 2016/9/13.
  */
-public class User extends BaseModel{
+public class User extends BaseModel {
 
     private String userId; //登录帐号
     private String userPwd; //登录密码
@@ -31,6 +31,14 @@ public class User extends BaseModel{
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public User() {
+    }
+
+    public User(String userId, String userPwd) {
+        this.userId = userId;
+        this.userPwd = userPwd;
     }
 
     @Override

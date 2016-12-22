@@ -1,5 +1,7 @@
 package com.ttm.airbus.controller;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     @RequestMapping("/user/home")
+    @RequiresPermissions({"user:query","ADMIN"})
+    @RequiresRoles({})
     public String home(){
         return "It works!";
     }

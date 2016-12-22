@@ -5,22 +5,22 @@ package com.ttm.airbus.dal.model;
  */
 public class RolePermission extends BaseModel{
 
-    private long roleId; //角色标识
-    private long permissionId; //权限标识
+    private Long roleId; //角色标识
+    private Long permissionId; //权限标识
 
-    public long getRoleId() {
+    public Long getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(long roleId) {
+    public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
-    public long getPermissionId() {
+    public Long getPermissionId() {
         return permissionId;
     }
 
-    public void setPermissionId(long permissionId) {
+    public void setPermissionId(Long permissionId) {
         this.permissionId = permissionId;
     }
 

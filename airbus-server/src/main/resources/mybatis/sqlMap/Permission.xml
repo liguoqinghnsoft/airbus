@@ -4,16 +4,16 @@
     <resultMap id="permissionMap" type="Permission">
         <id column="pkId" property="pkId"/>
         <result column="code" property="code"/>
-        <result column="description" property="description"/>
+        <result column="description" property="desc"/>
 
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
         <result column="is_delete" property="isDelete"/>
     </resultMap>
 
-    <select id="base_column">
+    <sql id="base_column">
         pkId,code,description,createTime,updateTime,is_delete
-    </select>
+    </sql>
 
     <sql id="pageQuery">
         <where>
@@ -56,12 +56,16 @@
         <include refid="pageQuery"/>
     </select>
 
-    <select id="findByRoleId" parameterType="String" resultMap="permissionMap">
+    <select id="findByRoleId" parameterType="java.lang.Long" resultMap="permissionMap">
         SELECT a.pkId,a.code,a.description,a.createTime,a.updateTime,a.is_delete FROM
-        t_permission a INNER JOIN t_role_permission b on a.pkId=b.permissionId
+        t_permission a INNER JOIN t_role_permission b on a.pkId=b.permission_id
         WHERE b.role_id=#{roleId}
     </select>
 
-
+    <select id="selectById"  parameterType="java.lang.Long" resultMap="permissionMap">
+        SELECT
+        <include refid="base_column"/>
+        FROM t_permission WHERE pkId=#{pkId}
+    </select>
 
 </mapper>

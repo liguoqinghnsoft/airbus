@@ -12,4 +12,6 @@ public interface RoleMapper extends BaseMapper<Role>{
 
     public List<Role> findByUserId(Serializable userId);
 
+    public List<Role> findAll();
+
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ttm.basic.dal.mapper.UserMapper">
+<mapper namespace="com.ttm.airbus.dal.mapper.UserMapper">
     <resultMap id="userMap" type="User">
         <id column="pkId" property="pkId"/>
         <result column="user_id" property="userId"/>
@@ -12,9 +12,9 @@
         <result column="is_delete" property="isDelete"/>
     </resultMap>
 
-    <select id="base_column">
+    <sql id="base_column">
         pkId,user_id,user_pwd,salt,createTime,updateTime,is_delete
-    </select>
+    </sql>
 
     <sql id="pageQuery">
         <where>
@@ -57,18 +57,23 @@
         <include refid="pageQuery"/>
     </select>
 
-    <select id="login" parameterType="User" resultType="User">
+    <select id="login"  parameterType="User" resultMap="userMap">
         SELECT
         <include refid="base_column"/>
         FROM t_user WHERE user_id=#{userId} AND user_pwd=#{userPwd}
     </select>
 
-    <select id="findByUserId" parameterType="User" resultType="User">
+    <select id="findByUserId" parameterType="java.lang.Long" resultMap="userMap">
         SELECT
         <include refid="base_column"/>
         FROM t_user WHERE user_id=#{userId}
     </select>
 
+    <select id="selectById"  parameterType="java.lang.Long" resultMap="userMap">
+        SELECT
+        <include refid="base_column"/>
+        FROM t_user WHERE pkId=#{pkId}
+    </select>
 
 
 </mapper>

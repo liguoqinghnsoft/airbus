@@ -31,14 +31,13 @@ public class ShiroConfig {
     public ShiroFilterFactoryBean shiroFilter(DefaultWebSecurityManager securityManager){
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(securityManager);
-        bean.setLoginUrl("/login");
+        bean.setLoginUrl("/airbus/login");
         bean.setSuccessUrl("/index");
         bean.setUnauthorizedUrl("/unauthorized");
 
         Map<String,String> filterChain = new LinkedHashMap<>();
-        filterChain.put("/user/**", "authc");
-        filterChain.put("/login", "anon");
-        filterChain.put("/**", "anon");
+        filterChain.put("/**", "authc");
+        filterChain.put("/airbus/login", "anon");
         bean.setFilterChainDefinitionMap(filterChain);
         return bean;
     }
