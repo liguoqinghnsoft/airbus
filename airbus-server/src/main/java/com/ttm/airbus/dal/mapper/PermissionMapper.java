@@ -12,4 +12,6 @@ public interface PermissionMapper extends BaseMapper<Permission>{
 
     public List<Permission> findByRoleId(Serializable roleId);
 
+    public List<Permission> findByUserId(Serializable userId);
+
 }

@@ -56,10 +56,13 @@ public class UserAuthorizingRealm extends AuthorizingRealm {
             });
         } else {
             //普通管理员
+            //查询角色的权限
             roleMapper.findByUserId(user.getPkId()).forEach(role -> {
                 roles.add(role.getName());
                 permissionMapper.findByRoleId(role.getPkId()).forEach(permission -> permissions.add(permission.getCode()));
             });
+            //查询用户的权限
+            permissionMapper.findByUserId(user.getPkId()).forEach(permission -> permissions.add(permission.getCode()));
         }
         info.setRoles(roles);
         info.setStringPermissions(permissions);

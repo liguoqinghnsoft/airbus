@@ -32,11 +32,11 @@ public class LoginController {
         subject.login(token);
         if(subject.isAuthenticated()){
             logger.info("【用户"+username+"校验通过】");
-            return "login";
+            return "login_success";
         }else{
             logger.info("【用户"+username+"校验失败】");
         }
-        return "unauthorized";
+        return "login_failure";
     }
 
     @RequestMapping("/airbus/logout")
@@ -44,7 +44,17 @@ public class LoginController {
         Subject subject = SecurityUtils.getSubject();
         logger.info("【用户"+((User)subject.getPrincipal()).getUserId()+"进行系统登出】");
         subject.logout();
-        return "success";
+        return "logOut_success";
+    }
+
+    @RequestMapping("/airbus/addPermission")
+    public String addPermission(){
+        return "addPermission_success";
+    }
+
+    @RequestMapping("/airbus/addRole")
+    public String addRole(){
+        return "addRole_success";
     }
 
 }
