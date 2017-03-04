@@ -4,6 +4,7 @@ import com.ttm.airbus.dal.model.User;
 import com.ttm.airbus.utils.Consist;
 import com.ttm.airbus.utils.PwdEncoder;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -25,35 +26,39 @@ public class LoginController {
     private static final String SALT = "AIRBUS01";
 
     @RequestMapping("/airbus/login")
-    public String login(String username,String userPassword){
+    public String login(String username, String userPassword) {
         UsernamePasswordToken token = new UsernamePasswordToken(username, new PwdEncoder(SALT, Consist.MD5).encoder(userPassword));
         Subject subject = SecurityUtils.getSubject();
-        logger.info("【开始对用户"+username+"进行身份校验】");
-        subject.login(token);
-        if(subject.isAuthenticated()){
-            logger.info("【用户"+username+"校验通过】");
-            return "login_success";
-        }else{
-            logger.info("【用户"+username+"校验失败】");
+        logger.info("【开始对用户" + username + "进行身份校验】");
+        try{
+            subject.login(token);
+            if (subject.isAuthenticated()) {
+                logger.info("【用户" + username + "校验通过】");
+                return "login_success";
+            } else {
+                logger.info("【用户" + username + "校验失败】");
+            }
+            return "login_failure";
+        }catch (UnknownAccountException e){
+            return "login_failure";
         }
-        return "login_failure";
     }
 
     @RequestMapping("/airbus/logout")
-    public String logOut(){
+    public String logOut() {
         Subject subject = SecurityUtils.getSubject();
-        logger.info("【用户"+((User)subject.getPrincipal()).getUserId()+"进行系统登出】");
+        logger.info("【用户" + ((User) subject.getPrincipal()).getUserId() + "进行系统登出】");
         subject.logout();
         return "logOut_success";
     }
 
     @RequestMapping("/airbus/addPermission")
-    public String addPermission(){
+    public String addPermission() {
         return "addPermission_success";
     }
 
     @RequestMapping("/airbus/addRole")
-    public String addRole(){
+    public String addRole() {
         return "addRole_success";
     }
 

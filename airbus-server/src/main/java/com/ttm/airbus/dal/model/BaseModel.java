@@ -28,12 +28,12 @@ public class BaseModel implements Serializable{
         this.updateTime = updateTime;
     }
 
-    public Boolean getIsDelete() {
-        return isDelete;
+    public Boolean getStatus() {
+        return status;
     }
 
-    public void setIsDelete(Boolean isDelete) {
-        this.isDelete = isDelete;
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {
@@ -48,7 +48,7 @@ public class BaseModel implements Serializable{
 
     private Date updateTime;
 
-    private Boolean isDelete;
+    private Boolean status;
 
     @Override
     public String toString() {
@@ -56,7 +56,7 @@ public class BaseModel implements Serializable{
                 "pkId=" + pkId +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
-                ", isDelete=" + isDelete +
+                ", status=" + status +
                 '}';
     }
 }

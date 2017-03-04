@@ -9,31 +9,31 @@
 
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
-        <result column="is_delete" property="isDelete"/>
+        <result column="status" property="status"/>
     </resultMap>
 
     <sql id="base_column">
-        pkId,user_id,user_pwd,salt,createTime,updateTime,is_delete
+        pkId,user_id,user_pwd,salt,createTime,updateTime,status
     </sql>
 
     <sql id="pageQuery">
         <where>
             1=1
-            <if test="isDelete!=null">
-                AND is_delete=#{isDelete}
+            <if test="status!=null">
+                AND status=#{status}
             </if>
         </where>
     </sql>
 
     <insert id="insert" parameterType="User" keyProperty="pkId" useGeneratedKeys="true">
-        INSERT INTO t_user(user_id,user_pwd,slat,is_delete,createTime,updateTime)
-        VALUES(#{userId},#{userPwd},#{slat},#{isDelete},#{createTime},#{updateTime})
+        INSERT INTO t_user(user_id,user_pwd,slat,status,createTime,updateTime)
+        VALUES(#{userId},#{userPwd},#{slat},#{status},#{createTime},#{updateTime})
     </insert>
 
     <update id="update" parameterType="User">
         UPDATE t_user
         <set>
-            <if test="isDelete!=null and isDelete!=''">is_delete=#{isDelete},</if>
+            <if test="status!=null and status!=''">status=#{status},</if>
             updateTime=#{updateTime}
         </set>
         <where>
@@ -42,7 +42,7 @@
     </update>
 
     <delete id="delete" parameterType="Long">
-        UPDATE t_user SET  is_delete=1 WHERE pkId=#{pkId}
+        UPDATE t_user SET  status=1 WHERE pkId=#{pkId}
     </delete>
 
     <select id="select" parameterType="Map" resultMap="userMap">
