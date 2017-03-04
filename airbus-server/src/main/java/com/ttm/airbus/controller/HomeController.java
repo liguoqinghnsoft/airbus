@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class HomeController {
 
     @RequestMapping("/user/home")
-    @RequiresPermissions({"user:query","ADMIN"})
-    @RequiresRoles({})
+    @RequiresPermissions({"user:query"})
+    @RequiresRoles({"USER_ROLE"})
     public String home(){
         return "It works!";
     }
