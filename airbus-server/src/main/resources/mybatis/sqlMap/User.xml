@@ -5,7 +5,7 @@
         <id column="pkId" property="pkId"/>
         <result column="user_id" property="userId"/>
         <result column="user_pwd" property="userPwd"/>
-        <result column="slat" property="salt"/>
+        <result column="salt" property="salt"/>
 
         <result column="createTime" property="createTime"/>
         <result column="updateTime" property="updateTime"/>
@@ -26,15 +26,15 @@
     </sql>
 
     <insert id="insert" parameterType="User" keyProperty="pkId" useGeneratedKeys="true">
-        INSERT INTO t_user(user_id,user_pwd,slat,status,createTime,updateTime)
-        VALUES(#{userId},#{userPwd},#{slat},#{status},#{createTime},#{updateTime})
+        INSERT INTO t_user(user_id,user_pwd,salt,status,createTime,updateTime)
+        VALUES(#{userId},#{userPwd},#{salt},#{status},now(),now())
     </insert>
 
     <update id="update" parameterType="User">
         UPDATE t_user
         <set>
-            <if test="status!=null and status!=''">status=#{status},</if>
-            updateTime=#{updateTime}
+            <if test="status!=null">status=#{status},</if>
+            updateTime=now()
         </set>
         <where>
             pkId=#{pkId}

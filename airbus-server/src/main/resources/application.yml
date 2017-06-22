@@ -17,6 +17,11 @@ spring:
 server:
    port: 8080
 
+jdbc:
+     url: jdbc:mysql://10.255.132.19:3306/testdb
+     username: testdb
+     password: testdb
+
 ---
 
 spring:
@@ -25,6 +30,10 @@ spring:
 server:
    port: 80
 
+jdbc:
+     url: jdbc:mysql://10.255.4.26:3306/test
+     username: sims
+     password: simsconsult
 ---
 
 spring:
